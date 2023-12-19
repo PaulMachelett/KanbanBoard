@@ -1,0 +1,16 @@
+runtime: python310
+service: default
+
+handlers:
+  # serve client on default route
+  - url: /
+    static_files: build/index.html
+    upload: index.html
+  # serve static files (images, ...)
+  - url: /(.*\.(gif|media|json|ico|eot|ttf|woff|woff2|png|jpg|css|js))$
+    static_files: build/\1
+    upload: (.*)
+  # fallback for all other incoming routes (always serve index.html)
+  - url: /(.*)
+    static_files: build/index.html
+    upload: index.html

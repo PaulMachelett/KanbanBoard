@@ -1,0 +1,30 @@
+[
+    {
+      "id": 1,
+      "cardtitle": "Task 1",
+      "cardcontent": "Description of Task 1",
+      "card_creator": "John Doe",
+      "card_storypoints": 3,
+      "assigned_person": "Alice",
+      "card_end_date": "2023-12-31"
+    },
+    {
+      "id": 2,
+      "cardtitle": "Task 2",
+      "cardcontent": "Description of Task 2",
+      "card_creator": "Jane Doe",
+      "card_storypoints": 5,
+      "assigned_person": "Bob",
+      "card_end_date": "2023-12-15"
+    },
+    {
+      "id": 3,
+      "cardtitle": "Task 3",
+      "cardcontent": "Description of Task 3",
+      "card_creator": "Jim Doe",
+      "card_storypoints": 2,
+      "assigned_person": "Charlie",
+      "card_end_date": "2023-12-20"
+    }
+  ]
+  

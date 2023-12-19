@@ -1,0 +1,9 @@
+dispatch:
+  - url: "*/stb/*"
+    service: backend
+
+  - url: "*/docs/*"
+    service: backend
+
+  - url: "winged-memory-407417.ey.r.appspot.com/*"
+    service: default
