@@ -13,9 +13,9 @@ class Mapper (AbstractContextManager, ABC):
 
         if os.getenv('GAE_ENV', '').startswith('standard'):
             '''Cloud'''
-            self._cnx = connector.connect(user='root', password='123456789',
-                                          unix_socket='',
-                                          database='')
+            self._cnx = connector.connect(user='root', password='password',
+                                          unix_socket='/cloudsql/winged-memory-407417:europe-west3:kanban-db',
+                                          database='kanban-db')
         else:
             '''Local'''
             self._cnx = connector.connect(user='root', password='Lollipopp2402',
