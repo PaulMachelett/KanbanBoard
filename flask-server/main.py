@@ -11,7 +11,7 @@ from src.bo.Comment import Comment
 from src.bo.ProjectParticipation import ProjectParticipation
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='client/')
 api = Api(app, version='1.0')
 CORS(app, resources=r'/kbb/*')
 
