@@ -15,7 +15,7 @@ class Mapper (AbstractContextManager, ABC):
             '''Cloud'''
             self._cnx = connector.connect(user='root', password='password',
                                           unix_socket='/cloudsql/winged-memory-407417:europe-west3:kanban-db',
-                                          database='kanban-db')
+                                          database='KanbanDB')
         else:
             '''Local'''
             self._cnx = connector.connect(user='root', password='Lollipopp2402',
