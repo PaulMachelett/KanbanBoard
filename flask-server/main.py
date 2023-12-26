@@ -11,9 +11,11 @@ from src.bo.Comment import Comment
 from src.bo.ProjectParticipation import ProjectParticipation
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='client/')
 api = Api(app)
 CORS(app)
+
+kbb = api.namespace('kbb', description='Funktionen der Kanbanboard Anwendung')
 
 bo = api.model('BusinessObject', {
     'id': fields.Integer(attribute='_id', description='Der Unique Identifier eines Business Object')
@@ -68,8 +70,8 @@ projectparticipation = api.inherit('ProjectParticipation', bo, {
 })
 
 
-@api.route("/kanbancard/phase/<int:phaseid>")
-@api.param('phaseid', 'PhaseId der Kanbancard')
+@kbb.route("/kanbancard/phase/<int:phaseid>")
+@kbb.param('phaseid', 'PhaseId der Kanbancard')
 class KanbanCardListOperations(Resource):
 
     @api.marshal_list_with(kanbancard)
@@ -79,7 +81,7 @@ class KanbanCardListOperations(Resource):
         return list_kanbancard
 
 
-@api.route("/kanbancard")
+@kbb.route("/kanbancard")
 class KanbanCardOperations(Resource):
 
     @api.marshal_with(kanbancard)
@@ -107,9 +109,9 @@ class KanbanCardOperations(Resource):
             return '', 500
 
 
-@api.route('/kanbancard/<int:id>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('id', 'Die id der Kanbancard')
+@kbb.route('/kanbancard/<int:id>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('id', 'Die id der Kanbancard')
 class KanbancardDeleteOperations(Resource):
 
     def delete(self, id):
@@ -117,8 +119,8 @@ class KanbancardDeleteOperations(Resource):
         return adm.delete_kanbancard(id)
 
 
-@api.route('/person')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.route('/person')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PersonOperations(Resource):
 
     @api.marshal_with(person)
@@ -146,9 +148,9 @@ class PersonOperations(Resource):
             return '', 500
 
 
-@api.route('/person/<int:googleid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('googleid', 'Die googleid der Person')
+@kbb.route('/person/<int:googleid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('googleid', 'Die googleid der Person')
 class PersonGetByGoogleIdOperations(Resource):
 
     @api.marshal_with(person)
@@ -158,9 +160,9 @@ class PersonGetByGoogleIdOperations(Resource):
         return p
 
 
-@api.route('/person/<string:email>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('email', 'Die email der Person')
+@kbb.route('/person/<string:email>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('email', 'Die email der Person')
 class PersonGetByMailOperations(Resource):
 
     @api.marshal_with(person)
@@ -170,9 +172,9 @@ class PersonGetByMailOperations(Resource):
         return p
 
 
-@api.route('/person/delete/<int:id>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('id', 'Die id der Person')
+@kbb.route('/person/delete/<int:id>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('id', 'Die id der Person')
 class PersonDeleteOperations(Resource):
 
     @api.marshal_with(person)
@@ -182,9 +184,9 @@ class PersonDeleteOperations(Resource):
         return id
 
 
-@api.route('/projectparticipation/projects/<int:personid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('personid', 'Die id der Person')
+@kbb.route('/projectparticipation/projects/<int:personid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('personid', 'Die id der Person')
 class ProjectParticipationGetAllProjectByPersonIdOperations(Resource):
 
     @api.marshal_list_with(project)
@@ -193,9 +195,9 @@ class ProjectParticipationGetAllProjectByPersonIdOperations(Resource):
         return adm.get_all_project_by_personid(personid)
 
 
-@api.route('/projectparticipation/persons/<int:projectid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('projectid', 'Die id des Projekts')
+@kbb.route('/projectparticipation/persons/<int:projectid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('projectid', 'Die id des Projekts')
 class ProjectParticipationGetAllPersonByProjectIdOperations(Resource):
 
     @api.marshal_list_with(person)
@@ -204,8 +206,8 @@ class ProjectParticipationGetAllPersonByProjectIdOperations(Resource):
         return adm.get_all_person_by_projectid(projectid)
 
 
-@api.route('/projectparticipation/remove')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.route('/projectparticipation/remove')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectParticipationRemoveOperations(Resource):
 
     @api.marshal_with(projectparticipation)
@@ -216,8 +218,8 @@ class ProjectParticipationRemoveOperations(Resource):
         return adm.remove_person_from_project(p)
 
 
-@api.route('/project')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.route('/project')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class ProjectOperations(Resource):
 
     @api.expect(project)
@@ -243,9 +245,9 @@ class ProjectOperations(Resource):
             return '', 500
 
 
-@api.route('/project/<int:projectid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('projectid', 'Die id des Projects')
+@kbb.route('/project/<int:projectid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('projectid', 'Die id des Projects')
 class ProjectDeleteOperations(Resource):
 
     def delete(self, projectid):
@@ -253,8 +255,8 @@ class ProjectDeleteOperations(Resource):
         return adm.delete_project(projectid)
 
 
-@api.route('/phase')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.route('/phase')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class PhaseOperations(Resource):
 
     @api.expect(phase)
@@ -280,9 +282,9 @@ class PhaseOperations(Resource):
             return '', 500
 
 
-@api.route('/phase/project/<int:projectid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('projectid', 'Die id des Projekts')
+@kbb.route('/phase/project/<int:projectid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('projectid', 'Die id des Projekts')
 class PhaseProjectIdOperations(Resource):
 
     @api.marshal_list_with(phase)
@@ -291,9 +293,9 @@ class PhaseProjectIdOperations(Resource):
         return adm.get_all_phase_by_projectid(projectid)
 
 
-@api.route('/phase/<int:phaseid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('phaseid', 'Die id der Phase')
+@kbb.route('/phase/<int:phaseid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('phaseid', 'Die id der Phase')
 class PhaseDeleteOperations(Resource):
 
     def delete(self, phaseid):
@@ -301,8 +303,8 @@ class PhaseDeleteOperations(Resource):
         return adm.delete_phase(phaseid)
 
 
-@api.route('/comment')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.route('/comment')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
 class CommentOperations(Resource):
 
     @api.expect(comment)
@@ -328,9 +330,9 @@ class CommentOperations(Resource):
             return '', 500
 
 
-@api.route('/comment/card/<int:cardid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('carid', 'Die ID des Comments')
+@kbb.route('/comment/card/<int:cardid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('carid', 'Die ID des Comments')
 class CommentCardIDOperations(Resource):
 
     @api.marshal_list_with(comment)
@@ -339,9 +341,9 @@ class CommentCardIDOperations(Resource):
             return adm.get_all_comment_by_cardid(cardid)
 
 
-@api.route('/comment/<int:commentid>')
-@api.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
-@api.param('commentid', 'Die ID des Kommentars')
+@kbb.route('/comment/<int:commentid>')
+@kbb.response(500, 'Falls es zu einem Server-seitigen Fehler kommt.')
+@kbb.param('commentid', 'Die ID des Kommentars')
 class CommentDeleteOperations(Resource):
 
     def delete(self, commentid):

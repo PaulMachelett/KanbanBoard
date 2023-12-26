@@ -2,7 +2,7 @@ dispatch:
   # - url: "*/stb/*"
   #   service: backend
 
-  - url: "*/api/*"
+  - url: "*/kbb/*"
     service: backend
 
   - url: "winged-memory-407417.ey.r.appspot.com/*"
