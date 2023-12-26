@@ -13,7 +13,7 @@ from src.bo.ProjectParticipation import ProjectParticipation
 
 app = Flask(__name__, static_folder='client/')
 api = Api(app)
-CORS(app)
+CORS(app, resources=r'/kbb/*')
 
 kbb = api.namespace('kbb', description='Funktionen der Kanbanboard Anwendung')
 
