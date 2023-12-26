@@ -17,6 +17,7 @@ export default function Api() {
           );
         }
         let actualData = await response.json();
+        console.log(actualData);
         setData(actualData);
         setError(null);
         console.log(actualData);
