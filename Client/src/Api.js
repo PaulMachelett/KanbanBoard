@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+const baseURL = "/kbb";
+
 export default function Api() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -8,9 +10,7 @@ export default function Api() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(
-          `http://127.0.0.1:5000/kanbancard/phase/1`
-        );
+        const response = await fetch(`${baseURL}/kanbancard/phase/1`);
         if (!response.ok) {
           throw new Error(
             `This is an HTTP error: The status is ${response.status}`
