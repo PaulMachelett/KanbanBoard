@@ -1,8 +1,8 @@
 dispatch:
-  # - url: "*/stb/*"
-  #   service: backend
-
   - url: "*/kbb/*"
+    service: backend
+
+  - url: "*/docs/*"
     service: backend
 
   - url: "winged-memory-407417.ey.r.appspot.com/*"
