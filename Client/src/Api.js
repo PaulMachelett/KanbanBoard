@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const baseURL = "/kbb";
+const baseURL = "https://winged-memory-407417.ey.r.appspot.com/kbb";
 
 export default function Api() {
   const [data, setData] = useState(null);
